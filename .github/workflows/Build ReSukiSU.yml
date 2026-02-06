@@ -1,4 +1,5 @@
 name: Build ReSukiSU
+
 on:
   workflow_dispatch:
     inputs:
@@ -146,6 +147,7 @@ on:
         default: 'Off'
          
 jobs:
+
   build:
     name: For ${{ github.event.inputs.FEIL }} KPM ${{ github.event.inputs.KPM }} lz4kd ${{ github.event.inputs.lz4kd }} SUSFS ${{ github.event.inputs.SUSFS }}
     runs-on: ubuntu-latest
@@ -289,23 +291,6 @@ jobs:
           # 下载并执行设置脚本
           echo "🛠️ 正在设置ReSukiSU..."
           curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
-          
-          cd KernelSU
-          echo "⬇️ 下载ReSukiSU设置工具..."
-          curl -L -o resukisu_setup.bin https://github.com/Xiaomichael/OnePlus-Actions/raw/Build/script/resukisu_setup.bin
-          chmod +x resukisu_setup.bin
-          
-          # 验证Kbuild存在
-          if [ ! -f "kernel/Kbuild" ]; then
-            echo "❌ 错误：缺少kernel/Kbuild"
-            ls -la
-            exit 1
-          fi
-          
-          ./resukisu_setup.bin
-          rm -rf ./resukisu_setup.bin
-          
-          echo "✅ ReSukiSU 配置完成"
           
       - name: "🔧 Setup Patches | 配置补丁"
         run: |
